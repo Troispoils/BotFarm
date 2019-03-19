@@ -53,9 +53,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cli, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\cli.dll</HintPath>
+    <Reference Include="cli">
+      <HintPath>..\Lib\cli.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

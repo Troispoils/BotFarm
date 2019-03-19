@@ -748,6 +748,21 @@ namespace Client
                 SendPacket(heartbeat);
             }, new TimeSpan(0, 0, 0, 0, 100), flags: ActionFlag.Movement);
         }
+
+        public void TargetLeader()
+        {
+            var response = new OutPacket(WorldCommand.CMSG_SET_SELECTION);
+            response.Write((ulong)GroupLeaderGuid);
+            SendPacket(response);
+            Console.WriteLine("SendPacket Target!");
+        }
+
+        public void AttackAssist(UInt64 guidt)
+        {
+            var response = new OutPacket(WorldCommand.CMSG_ATTACKSWING);
+            response.Write(guidt);
+            SendPacket(response);
+        }
         #endregion
 
         #region Packet Handlers

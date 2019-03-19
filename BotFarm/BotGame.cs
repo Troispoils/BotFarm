@@ -261,12 +261,23 @@ namespace BotFarm
             }
             else if (message == "targetme")
             {
-                var response = new OutPacket(WorldCommand.CMSG_SET_SELECTION);
-                response.Write((ulong)GroupLeaderGuid);
-                SendPacket(response);
-                Console.WriteLine("SendPacket Target!");
+                TargetLeader();
             }
 
+        }
+
+        [PacketHandler(WorldCommand.SMSG_ATTACKSTART)]
+        protected void HandleAttackStart(InPacket packet)
+        {
+            var GuidAttackers = packet.ReadUInt64();
+            var GuidTarget = packet.ReadUInt64();
+
+            if(GuidAttackers == GroupLeaderGuid)
+            {
+                Console.WriteLine("GuidA : " + GuidAttackers + " | GuidT " + GuidTarget);
+                AttackAssist(GuidTarget);
+            }
+                
         }
 
         [PacketHandler(WorldCommand.SMSG_RESURRECT_REQUEST)]

@@ -248,7 +248,7 @@ namespace BotFarm
             string message = packet.ReadCString();
 
             Console.WriteLine(chatType + "." + language + "." + senderGuid + "." + message);
-            if(message == "test")
+            if(message == "heal")
             {
                 var response = new OutPacket(WorldCommand.CMSG_CAST_SPELL);
                 response.Write((Byte)1);
@@ -257,7 +257,14 @@ namespace BotFarm
                 response.Write((UInt32)0x00000000);
                 
                 SendPacket(response);
-                Console.WriteLine("SendPacket ok!");
+                Console.WriteLine("SendPacket Heal!");
+            }
+            else if (message == "targetme")
+            {
+                var response = new OutPacket(WorldCommand.CMSG_SET_SELECTION);
+                response.Write((ulong)GroupLeaderGuid);
+                SendPacket(response);
+                Console.WriteLine("SendPacket Target!");
             }
 
         }

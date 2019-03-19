@@ -248,6 +248,17 @@ namespace BotFarm
             string message = packet.ReadCString();
 
             Console.WriteLine(chatType + "." + language + "." + senderGuid + "." + message);
+            if(message == "test")
+            {
+                var response = new OutPacket(WorldCommand.CMSG_CAST_SPELL);
+                response.Write((Byte)1);
+                response.Write((UInt32)2050);
+                response.Write((Byte)0x00000000);
+                response.Write((UInt32)0x00000000);
+                
+                SendPacket(response);
+                Console.WriteLine("SendPacket ok!");
+            }
 
         }
 

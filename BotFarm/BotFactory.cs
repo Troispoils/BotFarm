@@ -100,13 +100,13 @@ namespace BotFarm
             DBCStoresCLI.DBCStores.Initialize(Settings.Default.DBCsFolderPath);
             DBCStoresCLI.DBCStores.LoadDBCs();
 
-            factoryGame = new AutomatedGame(Settings.Default.Hostname,
+            /*factoryGame = new AutomatedGame(Settings.Default.Hostname,
                                             Settings.Default.Port,
                                             Settings.Default.Username,
                                             Settings.Default.Password,
                                             Settings.Default.RealmID,
                                             0);
-            factoryGame.Start();
+            factoryGame.Start();*/
         }
 
         public BotGame CreateBot()
@@ -115,8 +115,8 @@ namespace BotFarm
 
             string username = "BOT" + randomGenerator.Next();
             string password = randomGenerator.Next().ToString();
-            lock(factoryGame)
-                factoryGame.DoSayChat(".account create " + username + " " + password);
+            /*lock(factoryGame)
+                factoryGame.DoSayChat(".account create " + username + " " + password);*/
 
             uint behaviorRandomIndex = (uint)randomGenerator.Next(100);
             uint behaviorCurrentIndex = 0;
@@ -168,11 +168,11 @@ namespace BotFarm
 
         public void SetupFactory(int botCount)
         {
-            while(!factoryGame.LoggedIn)
+            /*while(!factoryGame.LoggedIn)
             {
                  Log("Waiting for BotFactory account to login");
                  Thread.Sleep(1000);
-            }
+            }*/
 
             Log("Setting up bot factory with " + botCount + " bots");
             Stopwatch watch = new Stopwatch();
@@ -192,7 +192,7 @@ namespace BotFarm
                 Interlocked.Increment(ref createdBots);
             });
 
-            Parallel.For(createdBots, botCount, index =>
+            /*Parallel.For(createdBots, botCount, index =>
             {
                 try
                 {
@@ -208,7 +208,7 @@ namespace BotFarm
                 {
                     Log("Error creating new bot: " + ex.Message + "\n" + ex.StackTrace, LogLevel.Error);
                 }
-            });
+            });*/
 
             watch.Stop();
             Log("Finished setting up bot factory with " + botCount + " bots in " + watch.Elapsed);

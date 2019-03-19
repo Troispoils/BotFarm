@@ -236,6 +236,21 @@ namespace BotFarm
                 SendPacket(new OutPacket(WorldCommand.CMSG_GROUP_ACCEPT, 4));
         }
 
+        [PacketHandler(WorldCommand.SMSG_MESSAGECHAT)]
+        protected void HandleMessage(InPacket packet)
+        {
+            var chatType = (Client.Chat.Definitions.ChatMessageType)packet.ReadByte();
+            var language = (Client.Chat.Definitions.Language)packet.ReadInt32();
+            UInt64 senderGuid = packet.ReadUInt64();
+            var unkInt = packet.ReadUInt32();
+            var receiverGuid = packet.ReadUInt64();
+            UInt32 messageLen = packet.ReadUInt32();
+            string message = packet.ReadCString();
+
+            Console.WriteLine(chatType + "." + language + "." + senderGuid + "." + message);
+
+        }
+
         [PacketHandler(WorldCommand.SMSG_RESURRECT_REQUEST)]
         protected void HandleResurrectRequest(InPacket packet)
         {

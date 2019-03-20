@@ -863,8 +863,13 @@ namespace Client
             updateObjectHandler.HandleUpdatePacket(packet.Inflate());
         }
 
-        [PacketHandler(WorldCommand.SMSG_MONSTER_MOVE)]
+        /*[PacketHandler(WorldCommand.SMSG_MONSTER_MOVE)]
         protected void HandleMonsterMove(InPacket packet)
+        {
+            updateObjectHandler.HandleMonsterMovementPacket(packet);
+        }*/
+
+        public void updateObj(InPacket packet)
         {
             updateObjectHandler.HandleMonsterMovementPacket(packet);
         }

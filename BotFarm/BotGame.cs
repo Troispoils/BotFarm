@@ -46,6 +46,16 @@ namespace BotFarm
         } = new HashSet<ulong>();
         #endregion
 
+        #region infoAttack
+
+        public ulong cibleGuid
+        {
+            get;
+            private set;
+        }
+
+        #endregion
+
         public BotGame(string hostname, int port, string username, string password, int realmId, int character, BotBehaviorSettings behavior)
             : base(hostname, port, username, password, realmId, character)
         {
@@ -276,10 +286,30 @@ namespace BotFarm
             {
                 Console.WriteLine("GuidA : " + GuidAttackers + " | GuidT " + GuidTarget);
                 AttackAssist(GuidTarget);
+                cibleGuid = GuidTarget;
             }
                 
         }
 
+        [PacketHandler(WorldCommand.SMSG_MONSTER_MOVE)]
+        protected void HandleMonsterMove(InPacket packet)
+        {
+            updateObj(packet);
+            
+            var Guid = packet.ReadUInt64();
+            var boolean = packet.ReadBoolean();
+            if(cibleGuid != GroupLeaderGuid)
+            {
+                if (Guid == cibleGuid)
+                {
+                    var positionCible = packet.ReadVector3();
+                    Position pose = new Position(positionCible.X, positionCible.Y, positionCible.Z, 0, Player.MapID);
+                    MoveTo(pose);
+                    Console.WriteLine("Deplacement ver le monstre!");
+                }
+            }
+        }
+               
         [PacketHandler(WorldCommand.SMSG_RESURRECT_REQUEST)]
         protected void HandleResurrectRequest(InPacket packet)
         {

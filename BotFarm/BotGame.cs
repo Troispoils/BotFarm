@@ -295,8 +295,23 @@ namespace BotFarm
         protected void HandleMonsterMove(InPacket packet)
         {
             updateObj(packet);
-            
-            var Guid = packet.ReadUInt64();
+
+        }
+
+        [PacketHandler(WorldCommand.SMSG_THREAT_UPDATE)]
+        protected void HandleThreatUpdate(InPacket packet)
+        {
+            var guidMonster = packet.ReadPackedGuid();
+            Console.WriteLine("GuidMonster : " + guidMonster);
+
+            var count = packet.ReadUInt32();
+            for (int i = 0; i < count; i++)
+            {
+                Console.WriteLine("first GUID : " + packet.ReadPackedGuid() + " Threat : " + packet.ReadUInt32());
+            }
+
+
+            /*var Guid = packet.ReadUInt64();
             var boolean = packet.ReadBoolean();
             if(cibleGuid != GroupLeaderGuid)
             {
@@ -307,7 +322,7 @@ namespace BotFarm
                     MoveTo(pose);
                     Console.WriteLine("Deplacement ver le monstre!");
                 }
-            }
+            }*/
         }
                
         [PacketHandler(WorldCommand.SMSG_RESURRECT_REQUEST)]

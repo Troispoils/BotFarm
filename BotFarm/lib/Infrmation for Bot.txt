@@ -1,0 +1,34 @@
+
+//Recup de la loc du monstre qui attack
+ServerToClient: SMSG_ON_MONSTER_MOVE (0x00DD) Length: 57 ConnIdx: 0 Time: 03/21/2019 10:13:41.875 Number: 182
+GUID: Full: 0xF130000C1A0032A0 Type: Creature Entry: 3098 Low: 12960
+Toggle AnimTierInTrans: false
+Position: X: -511.0262 Y: -4286.143 Z: 41.56051
+Move Ticks: 23046831
+Spline Type: 3 (FacingTarget)
+Facing GUID: Full: 0x00000005 Type: Player Low: 5
+Spline Flags: 0 (None)
+Move Time: 132
+Waypoints: 1
+Waypoint Endpoint: X: -510.9241 Y: -4285.81 Z: 40.85414
+
+
+//Mort du monstre
+ServerToClient: SMSG_PARTY_KILL_LOG (0x01F5) Length: 16 ConnIdx: 0 Time: 03/21/2019 10:13:50.625 Number: 256
+Player GUID: Full: 0x00000005 Type: Player Low: 5
+Victim GUID: Full: 0xF130000C1A0032A0 Type: Creature Entry: 3098 Low: 12960
+
+
+
+//System de loot:
+
+ServerToClient: SMSG_LOOT_LIST (0x03F9) Length: 11 ConnIdx: 0 Time: 03/21/2019 10:13:50.625 Number: 257
+Creature GUID: Full: 0xF130000C1A0032A0 Type: Creature Entry: 3098 Low: 12960
+Master Loot GUID?: 0x0
+Looter GUID: Full: 0x00000005 Type: Player Low: 5
+
+ClientToServer: CMSG_SET_SELECTION (0x013D) Length: 8 ConnIdx: 0 Time: 03/21/2019 10:13:53.265 Number: 283
+GUID: Full: 0xF130000C1A0032A0 Type: Creature Entry: 3098 Low: 12960
+
+ClientToServer: CMSG_LOOT_UNIT (0x015D) Length: 8 ConnIdx: 0 Time: 03/21/2019 10:13:53.265 Number: 284
+GUID: Full: 0xF130000C1A0032A0 Type: Creature Entry: 3098 Low: 12960

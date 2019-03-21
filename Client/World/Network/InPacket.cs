@@ -5,7 +5,7 @@ using System.IO.Compression;
 
 namespace Client.World.Network
 {
-    public class InPacket : BinaryReader, Packet
+    public sealed partial class InPacket : BinaryReader, Packet
     {
         public Header Header { get; private set; }
 

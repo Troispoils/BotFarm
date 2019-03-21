@@ -757,11 +757,12 @@ namespace Client
             Console.WriteLine("SendPacket Target!");
         }
 
-        public void AttackAssist(UInt64 guidt)
+        public void AttackAssist(ulong guidt)
         {
             var response = new OutPacket(WorldCommand.CMSG_ATTACKSWING);
             response.Write(guidt);
             SendPacket(response);
+            Console.WriteLine("SendPacket Attack!");
         }
         #endregion
 

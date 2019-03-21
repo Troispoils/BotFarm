@@ -746,4 +746,23 @@ namespace Client.World.Definitions
         GROUPTYPE_LFG = 0x08
         // 0x10, leave/change group?, I saw this flag when leaving group and after leaving BG while in group
     };
+
+
+    //add enum
+    public enum SplineType
+    {
+            Normal = 0,
+            Stop = 1,
+            FacingSpot = 2,
+            FacingTarget = 3,
+            FacingAngle = 4
+    }
+
+    public enum MovementAnimationState
+    {
+        OnGround = 0,
+        Swimming = 1,
+        Hover = 2,
+        Flying = 3
+    }
 }

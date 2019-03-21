@@ -281,6 +281,7 @@ namespace BotFarm
         {
             var GuidAttackers = packet.ReadUInt64();
             var GuidTarget = packet.ReadUInt64();
+            Console.WriteLine("SMSG_ATTACKSTART : " + GuidAttackers + " | " + GuidTarget);
 
             if(GuidAttackers == GroupLeaderGuid)
             {
@@ -296,6 +297,74 @@ namespace BotFarm
         {
             updateObj(packet);
 
+            //Guid Mob
+            var guid = packet.ReadPackedGuid();
+            if (guid != GroupLeaderGuid)
+            {
+                //Console.WriteLine("Different du Leader");
+                if (guid == cibleGuid)
+                {
+                    //Console.WriteLine("Traitement du packet Mouvement");
+                    //inutile
+                    packet.ReadBoolean();
+                    //pos du mob avant mouvement
+                    var pos = packet.ReadVector3();
+                    //move tick
+                    packet.ReadInt32();
+                    //Spline Type
+                    var type = packet.ReadByteE<SplineType>();
+                    switch (type)
+                    {
+                        case SplineType.FacingSpot:
+                            {
+                                packet.ReadVector3();
+                                break;
+                            }
+                        case SplineType.FacingTarget:
+                            {
+                                //si Spline line = FacingTarget, Recup du GUID Leader group
+                                var guidTarget = packet.ReadPackedGuid();
+                                break;
+                            }
+                        case SplineType.FacingAngle:
+                            {
+                                packet.ReadSingle();
+                                break;
+                            }
+                        case SplineType.Stop:
+                            return;
+                    }
+                    //inutile ?
+                    var flags = packet.ReadInt32E<SplineFlags>();
+                    if (flags.HasAnyFlag(SplineFlags.Animation))
+                    {
+                        packet.ReadByteE<MovementAnimationState>();
+                        packet.ReadInt32();
+                    }
+                    packet.ReadInt32();
+                    if (flags.HasAnyFlag(SplineFlags.Parabolic))
+                    {
+                        packet.ReadSingle();
+                        packet.ReadInt32();
+                    }
+                    //nombre de waypoint
+                    var waypoints = packet.ReadInt32();
+
+                    if (flags.HasAnyFlag(SplineFlags.Flying | SplineFlags.Catmullrom))
+                    {
+                        for (var i = 0; i < waypoints; i++)
+                            packet.ReadVector3();
+                    }
+                    else
+                    {
+                        //positionFinal
+                        var newpos = packet.ReadVector3();
+                        Position pose = new Position(newpos.X, newpos.Y, newpos.Z, 0, Player.MapID);
+                        MoveTo(pose);
+                        Console.WriteLine("Deplacement ver le monstre!");
+                    }
+                }
+            }
         }
 
         [PacketHandler(WorldCommand.SMSG_THREAT_UPDATE)]

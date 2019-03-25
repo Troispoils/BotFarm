@@ -157,6 +157,13 @@ namespace BotFarm
             }
             #endregion
 
+            #region HealeGroupLeader
+            /*if (Behavior.HealeGroupLeader)
+            {
+                PushStrategicAI(new HealerAI());
+            }*/
+            #endregion
+
             #region Explorer
             if (Behavior.Explorer)
             {
@@ -285,7 +292,7 @@ namespace BotFarm
 
             if(GuidAttackers == GroupLeaderGuid)
             {
-                Console.WriteLine("GuidA : " + GuidAttackers + " | GuidT " + GuidTarget);
+                //Console.WriteLine("GuidA : " + GuidAttackers + " | GuidT " + GuidTarget);
                 AttackAssist(GuidTarget);
                 cibleGuid = GuidTarget;
             }
@@ -295,16 +302,17 @@ namespace BotFarm
         [PacketHandler(WorldCommand.SMSG_MONSTER_MOVE)]
         protected void HandleMonsterMove(InPacket packet)
         {
-            updateObj(packet);
+            var newpacket = packet;
+            updateObj(newpacket);
 
             //Guid Mob
-            var guid = packet.ReadPackedGuid();
+            var guid = packet.ReadUInt64();
             if (guid != GroupLeaderGuid)
             {
-                //Console.WriteLine("Different du Leader");
+                //Console.WriteLine("Different du Leader " + guid);
                 if (guid == cibleGuid)
                 {
-                    //Console.WriteLine("Traitement du packet Mouvement");
+                    Console.WriteLine("Traitement du packet Mouvement");
                     //inutile
                     packet.ReadBoolean();
                     //pos du mob avant mouvement
@@ -323,7 +331,7 @@ namespace BotFarm
                         case SplineType.FacingTarget:
                             {
                                 //si Spline line = FacingTarget, Recup du GUID Leader group
-                                var guidTarget = packet.ReadPackedGuid();
+                                var guidTarget = packet.ReadUInt64();
                                 break;
                             }
                         case SplineType.FacingAngle:

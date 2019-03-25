@@ -764,6 +764,17 @@ namespace Client
             SendPacket(response);
             Console.WriteLine("SendPacket Attack!");
         }
+
+        public void CastSpellid(uint spell)
+        {
+            var response = new OutPacket(WorldCommand.CMSG_CAST_SPELL);
+            response.Write((Byte)1);
+            response.Write((UInt32)2050);
+            response.Write((Byte)0x00000000);
+            response.Write((UInt32)0x00000000);
+
+            SendPacket(response);
+        }
         #endregion
 
         #region Packet Handlers
@@ -1112,7 +1123,10 @@ namespace Client
                 byte blockCount = packet.ReadByte();
                 int[] updateMask = new int[blockCount];
                 for (var i = 0; i < blockCount; i++)
+                {
                     updateMask[i] = packet.ReadInt32();
+                }
+                    
                 var mask = new BitArray(updateMask);
 
                 for (var i = 0; i < mask.Count; ++i)
@@ -1121,6 +1135,10 @@ namespace Client
                         continue;
 
                     updateFields[i] = packet.ReadUInt32();
+                    /*if(guid == game.GroupLeaderGuid && i == 24)
+                    {
+                        //vie du leader
+                    }*/
                 }
             }
 
@@ -1177,6 +1195,11 @@ namespace Client
                                     OutPacket nameQuery = new OutPacket(WorldCommand.CMSG_NAME_QUERY);
                                     nameQuery.Write(guid);
                                     game.SendPacket(nameQuery);
+                                }
+
+                                if(guid == game.GroupLeaderGuid)
+                                {
+                                    worldObject.HEALTH = updateFields[24];
                                 }
                                 break;
                             }

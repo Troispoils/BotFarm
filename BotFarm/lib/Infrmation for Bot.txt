@@ -32,3 +32,17 @@ GUID: Full: 0xF130000C1A0032A0 Type: Creature Entry: 3098 Low: 12960
 
 ClientToServer: CMSG_LOOT_UNIT (0x015D) Length: 8 ConnIdx: 0 Time: 03/21/2019 10:13:53.265 Number: 284
 GUID: Full: 0xF130000C1A0032A0 Type: Creature Entry: 3098 Low: 12960
+
+//maj life
+ServerToClient: SMSG_ATTACKER_STATE_UPDATE (0x014A) Length: 43 ConnIdx: 0 Time: 03/25/2019 10:27:11.062 Number: 319
+HitInfo: 2 (HITINFO_AFFECTS_VICTIM)
+AttackerGUID: Full: 0x00000003 Type: Player Low: 3 Name: Tiaka
+TargetGUID: Full: 0xF130000C1A0032F7 Type: Creature Entry: 3098 Low: 13047
+Damage: 6
+OverDamage: 0
+[0] SchoolMask: 1
+[0] Float Damage: 6
+[0] Int Damage: 6
+VictimState: 1 (VICTIMSTATE_NORMAL)
+Unk Attacker State 0: 0
+Melee Spell ID : 0 (0)

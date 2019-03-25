@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="AI\BeggerAI.cs" />
     <Compile Include="AI\FollowGroupLeaderAI.cs" />
+    <Compile Include="AI\HealerAI.cs" />
     <Compile Include="BotBehaviorSettings.cs" />
     <Compile Include="BotFactory.cs" />
     <Compile Include="BotGame.cs" />

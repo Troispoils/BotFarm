@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BotFarm.AI
 {
-    class FollowGroupLeaderAI : IStrategicAI
+    class HealerAI : IStrategicAI
     {
         int scheduledAction;
         AutomatedGame game;
@@ -17,11 +17,11 @@ namespace BotFarm.AI
         public bool Activate(AutomatedGame game)
         {
             this.game = game;
-            ScheduleFollowLeader();
+            ScheduleHealeLeader();
             return true;
         }
 
-        void ScheduleFollowLeader()
+        void ScheduleHealeLeader()
         {
             scheduledAction = game.ScheduleAction(() =>
             {
@@ -35,14 +35,11 @@ namespace BotFarm.AI
                 WorldObject groupLeader;
                 if (game.Objects.TryGetValue(game.GroupLeaderGuid, out groupLeader))
                 {
-                    game.CancelActionsByFlag(ActionFlag.Movement);
-                    game.Follow(groupLeader);
-                    
-                    if (groupLeader.HEALTH < 50)
+                    if(groupLeader.HEALTH < 50)
                     {
                         game.CancelActionsByFlag(ActionFlag.Movement);
                         game.TargetLeader();
-                        game.CastSpellid(0);
+                        game.CastSpellid(0);                       
                     }
                 }
             }, DateTime.Now.AddSeconds(30), new TimeSpan(0, 0, 30));
@@ -65,7 +62,7 @@ namespace BotFarm.AI
 
         public void Resume()
         {
-            ScheduleFollowLeader();
+            ScheduleHealeLeader();
         }
 
         public void Update()

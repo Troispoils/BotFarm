@@ -23,19 +23,6 @@ namespace Client.World.Entities
         }
         ulong _guid;
 
-        public uint HEALTH
-        {
-            get
-            {
-                return _health;
-            }
-            set
-            {
-                _health = value;
-            }
-        }
-        uint _health;
-
         public uint this[PlayerField index]
         {
             get

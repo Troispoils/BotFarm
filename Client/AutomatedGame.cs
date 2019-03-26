@@ -142,6 +142,10 @@ namespace Client
 
         public UInt64 GroupLeaderGuid { get; private set; }
         public List<UInt64> GroupMembersGuids = new List<UInt64>();
+
+
+        public uint vieLeader { get; set; }
+        public Position monsterPosition;
         #endregion
 
         public AutomatedGame(string hostname, int port, string username, string password, int realmId, int character)
@@ -875,13 +879,8 @@ namespace Client
             updateObjectHandler.HandleUpdatePacket(packet.Inflate());
         }
 
-        /*[PacketHandler(WorldCommand.SMSG_MONSTER_MOVE)]
+        [PacketHandler(WorldCommand.SMSG_MONSTER_MOVE)]
         protected void HandleMonsterMove(InPacket packet)
-        {
-            updateObjectHandler.HandleMonsterMovementPacket(packet);
-        }*/
-
-        public void updateObj(InPacket packet)
         {
             updateObjectHandler.HandleMonsterMovementPacket(packet);
         }
@@ -922,6 +921,7 @@ namespace Client
             uint blockCount;
             ObjectUpdateType updateType;
             ulong guid;
+            ulong guidLeader;
             TypeID objectType;
             ObjectUpdateFlags flags;
             MovementInfo movementInfo;
@@ -1120,6 +1120,7 @@ namespace Client
 
             private void ReadValuesUpdateData(InPacket packet)
             {
+                guidLeader = game.GroupLeaderGuid;
                 byte blockCount = packet.ReadByte();
                 int[] updateMask = new int[blockCount];
                 for (var i = 0; i < blockCount; i++)
@@ -1135,10 +1136,12 @@ namespace Client
                         continue;
 
                     updateFields[i] = packet.ReadUInt32();
-                    /*if(guid == game.GroupLeaderGuid && i == 24)
+                    if (guid == game.GroupLeaderGuid && i == 24)
                     {
+                        //Console.WriteLine(guid + " | " + guidLeader);
+                        game.vieLeader = updateFields[i];
                         //vie du leader
-                    }*/
+                    }
                 }
             }
 
@@ -1197,10 +1200,6 @@ namespace Client
                                     game.SendPacket(nameQuery);
                                 }
 
-                                if(guid == game.GroupLeaderGuid)
-                                {
-                                    worldObject.HEALTH = updateFields[24];
-                                }
                                 break;
                             }
                         default:

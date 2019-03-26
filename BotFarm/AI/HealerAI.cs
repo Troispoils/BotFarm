@@ -35,7 +35,7 @@ namespace BotFarm.AI
                 WorldObject groupLeader;
                 if (game.Objects.TryGetValue(game.GroupLeaderGuid, out groupLeader))
                 {
-                    if(groupLeader.HEALTH < 50)
+                    if(game.vieLeader < 50)
                     {
                         game.CancelActionsByFlag(ActionFlag.Movement);
                         game.TargetLeader();

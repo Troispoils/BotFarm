@@ -37,15 +37,16 @@ namespace BotFarm.AI
                 {
                     game.CancelActionsByFlag(ActionFlag.Movement);
                     game.Follow(groupLeader);
-                    
-                    if (groupLeader.HEALTH < 50)
+
+                    //Console.WriteLine("Vie du leader : " + game.vieLeader);
+                    if (game.vieLeader < 50 && game.vieLeader > 0)
                     {
                         game.CancelActionsByFlag(ActionFlag.Movement);
                         game.TargetLeader();
                         game.CastSpellid(0);
                     }
                 }
-            }, DateTime.Now.AddSeconds(30), new TimeSpan(0, 0, 30));
+            }, DateTime.Now.AddSeconds(1), new TimeSpan(0, 0, 1));
         }
 
         public bool AllowPause()

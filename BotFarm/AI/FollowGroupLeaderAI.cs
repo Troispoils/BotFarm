@@ -46,6 +46,10 @@ namespace BotFarm.AI
                         game.CastSpellid(0);
                     }
                 }
+
+                Console.WriteLine(groupLeader.GetPosition().ToString());
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+
             }, DateTime.Now.AddSeconds(1), new TimeSpan(0, 0, 1));
         }
 

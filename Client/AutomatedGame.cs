@@ -700,7 +700,7 @@ namespace Client
                             return;
                         }
 
-                        path = new Path(resultPath, Player.Speed, Player.MapID);
+                        path = new Path(resultPath, 9.0f, Player.MapID);
                         pathEndPosition = target.GetPosition();
                     }
                 }
@@ -737,8 +737,8 @@ namespace Client
                 }
 
                 Point progressPosition = path.MoveAlongPath((float)(DateTime.Now - previousMovingTime).TotalSeconds);
+
                 Player.SetPosition(progressPosition.X, progressPosition.Y, progressPosition.Z);
-                previousMovingTime = DateTime.Now;
 
                 var heartbeat = new MovementPacket(WorldCommand.MSG_MOVE_HEARTBEAT)
                 {
@@ -750,6 +750,9 @@ namespace Client
                     O = path.CurrentOrientation
                 };
                 SendPacket(heartbeat);
+
+                previousMovingTime = DateTime.Now;
+
             }, new TimeSpan(0, 0, 0, 0, 100), flags: ActionFlag.Movement);
         }
 

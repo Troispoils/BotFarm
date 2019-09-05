@@ -41,6 +41,18 @@ namespace BotFarm
             logger = TextWriter.Synchronized(new StreamWriter(logPath));
             logger.WriteLine("Starting BotFactory");
 
+
+            //add compte pour bot
+            botInfos = new List<BotInfo>();
+            botInfos.Add(new BotInfo("troiscros", "azerty", "Default"));
+            using (StreamWriter sw = new StreamWriter(botsInfosPath))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<BotInfo>));
+                serializer.Serialize(sw, botInfos);
+            }
+            botInfos.Clear();
+            //close
+
             if (!File.Exists(botsInfosPath))
                 botInfos = new List<BotInfo>();
             else using (StreamReader sr = new StreamReader(botsInfosPath))
